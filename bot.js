@@ -22,9 +22,35 @@ client.on('ready', () => {
   .catch(console.error);
 });
 
-client.on('message', function (user, userID, channelID, message, evt) {
+client.on('message', message => {
+  // If the message is "ping"
+  if (message.content.charAt(0) == '-') {
+    // Send "pong" to the same channel
+   
+  var msg = message.content.substring(1);
+console.log(`Command Entered: ${msg}`);
+   
+switch(msg) {
+            // -ping
+            case 'ping':
+                 message.channel.send('pong');
+            break;
+			default:
+				
+				// var str1 = msg.concat(' is not a valid command');
+				
+				message.channel.send(`The command '${msg}' is not valid. Please contact the developer if this is a unexpected result`);
+			break;
+};
+
+  }
+});
+
+/* client.on('message', function (user, userID, channelID, message, evt) {
     // Our bot needs to know if it will execute a command
     // It will listen for messages that will start with `-`
+	console.log(message);
+	 
     if (message.substring(0, 1) == '-') {
         var args = message.substring(1).split(' ');
         var cmd = args[0];
@@ -41,7 +67,7 @@ client.on('message', function (user, userID, channelID, message, evt) {
             // Just add any case commands if you want to..
          }
      }
-});
+}); */
 
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
 client.login(config.token);
