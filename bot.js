@@ -35,9 +35,53 @@ if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const command = args.shift().toLowerCase();
 
 console.log(`Command Entered: ${command} by ${message.author.username}`);
- // if (message.content.charAt(0) == '-') {
-    // Send "pong" to the same channel
-    if (command === 'args') {
+
+switch(command){
+		case 'args':
+		if (!args.length) {
+		return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
+		};
+		message.channel.send(`Command name: ${command}\nArguments: ${args}`);
+		message.channel.send(`Argument 2: ${args[1]}`);
+		break;
+		case 'do':
+		if (!message.mentions.users.size) {
+			return message.send('you need to tag a user in order to do something to them them!');
+		}
+		const adverb = args[1] || 'analed';
+		var part1
+		if (!adverb == 'analed') {
+		// var part1 = adverb.concat(' analed');
+
+		part1 = adverb + ' analed';
+		console.log(part1);
+		
+		
+		} else {
+		part1 = adverb;
+		
+		};
+		
+		const taggedUser = message.mentions.users.first();
+		
+		console.log(part1);
+		
+		if (message.author.id == taggedUser.id) {
+			message.channel.send(`${message.author} ${part1} themselves.... Hurrah?`);
+		}
+		else {
+
+		message.channel.send(`${message.author} ${part1} ${taggedUser}! Hurrah!`);
+		}
+		break;
+		case 'help':
+		message.channel.send(`Access this site: https://uncleclan.zyrosite.com/ for help.`)
+		break;
+		default:
+		message.channel.send(`${message.author}, the command '${command}' is not a valid command! Please contact the developer if this is an unexpected occurrence.`)
+};
+
+  /*   if (command === 'args') {
 		if (!args.length) {
 		return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
 		};
@@ -70,14 +114,13 @@ console.log(`Command Entered: ${command} by ${message.author.username}`);
         .setAuthor(user.username)
         .setImage(url);
     message.channel.send(avatarEmbed); 
-};
+}; */
 	
- // var msg = message.content.substring(1);
+
 
 
 
   });
 
 
-// Log our bot in using the token from https://discordapp.com/developers/applications/me
 client.login(token);
