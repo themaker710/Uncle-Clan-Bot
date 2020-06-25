@@ -53,7 +53,7 @@ switch(command){
 			return message.channel.send('You need to tag a user in order to do something to them them!');
 		}
 		
-		if (args.length >= 1) {
+		if (args.length = 1) {
 		return message.channel.send(`You didn't provide any actions, ${message.author}!`);
 		};
 		const taggedUser = message.mentions.users.first();
