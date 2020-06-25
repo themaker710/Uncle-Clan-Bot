@@ -51,14 +51,14 @@ switch(command){
 		case 'do':
 		if (!message.mentions.users.size) {
 			return message.channel.send('You need to tag a user in order to do something to them them!');
-		}
-		
-		if (args.length = 1) {
-		return message.channel.send(`You didn't provide any actions, ${message.author}!`);
 		};
-		const taggedUser = message.mentions.users.first();
-		//const args = command.shift();
+		 console.log(args.length);
 		
+		//if (args && args.length >= 1) {
+		//return message.channel.send(`You didn't provide any actions, ${message.author}!`);
+		//};
+		
+		const taggedUser = message.mentions.users.first();
 		
 		var action = '';
 		var i;
