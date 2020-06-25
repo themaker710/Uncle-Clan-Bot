@@ -52,9 +52,10 @@ switch(command){
 		if (!message.mentions.users.size) {
 			return message.channel.send('You need to tag a user in order to do something to them them!');
 		}
-		//if () {
-		//return message.channel.send(`You didn't provide any actions, ${message.author}!`);
-		//};
+		
+		if (args.length >= 1) {
+		return message.channel.send(`You didn't provide any actions, ${message.author}!`);
+		};
 		const taggedUser = message.mentions.users.first();
 		//const args = command.shift();
 		
@@ -62,16 +63,17 @@ switch(command){
 		var action = '';
 		var i;
 		for (i = 1; i < args.length; i++) {
-			
+			// Ignore first entry in array, then create string sequentially and add space in between. Variable 'args' retains capitilisation. 
 			action = action+args[i]+(' ');
 			
 		
 		};
 		
 		action = action.trim();
-		
+		// Remove last space and any initial user entries that are not characters to provide a cleaner look (i.e. no double spaces).
 		
 		if (message.author.id == taggedUser.id) {
+			// If the person sending the message is the same as the user tagged
 		message.channel.send(`${message.author} ${action} themselves.... Hurrah?`);
 		}
 		else {
