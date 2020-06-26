@@ -33,9 +33,11 @@ if (!message.content.startsWith(prefix) || message.author.bot) return;
    
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const command = args.shift().toLowerCase();
+
+if (command.charAt(0) == "") return;	
+	
 	
 console.log(`Command Entered: ${command} by ${message.author.username}`);
-console.log(`${command}`); // temp
 
 
 switch(command){
@@ -49,16 +51,18 @@ switch(command){
 		
 		
 		case 'do':
+		const taggedUser = message.mentions.users.first();
 		if (!message.mentions.users.size) {
 			return message.channel.send('You need to tag a user in order to do something to them them!');
 		};
-		 console.log(args.length);
+		if (message.author.id == "720180397148733500" && taggedUser.id == "710318264932237362") {
+			return message.channel.send('ALEX STOP BEING WEIRD');
+		};
+		 // console.log(args.length);
 		
 		//if (args && args.length >= 1) {
 		//return message.channel.send(`You didn't provide any actions, ${message.author}!`);
 		//};
-		
-		const taggedUser = message.mentions.users.first();
 		
 		var action = '';
 		var i;
