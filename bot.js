@@ -7,7 +7,7 @@ const { prefix, token } = require('./config.json');
 const client = new Client();
 const shell = require('shelljs')
 let fs = require('fs')
-let logs = fs.createWriteStream('log.txt') //will creat log.txt if does not exist
+let logs = fs.createWriteStream('log.txt') //will create log.txt if does not exist
 /**
  * The ready event is vital, it means that only after this will your bot start reacting to information
  * received from Discord
@@ -23,7 +23,7 @@ client.on('ready', () => {
 logs.write('Log of commands entered: {command} by {user} in {guild/server name}\n')
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 
  // console.log(config.prefix.length);
  
@@ -49,10 +49,20 @@ switch(command){
 		break;
 		
 		case 'ping':
-		
-		message.channel.send('pong');
+		const m = await message.channel.send("Ping?"); // Wait for message to be sent
+		m.edit(`Pong!\n**API Ping:** \`${Math.round(client.ws.ping)}\`ms\n**Response Time:** \`${m.createdTimestamp - message.createdTimestamp}ms\``); // API Ping is websocket ping.
 		break;
-		
+		case 'uptime': {
+		// client.uptime is in millseconds
+		// % is modulo, AKA the remainder of a division
+		let days = Math.floor(client.uptime / 86400000);
+		let hours = Math.floor(client.uptime / 3600000) % 24;
+		let minutes = Math.floor(client.uptime / 60000) % 60;
+		let seconds = Math.floor(client.uptime / 1000) % 60;
+
+		message.channel.send(`**Uptime:** ${days}d ${hours}h ${minutes}m ${seconds}s`);
+		break;
+		}
 		case 'do':
 		const taggedUser = message.mentions.users.first();
 		if (!message.mentions.users.size) {
@@ -61,22 +71,19 @@ switch(command){
 		if (message.author.id == "720180397148733500" && taggedUser.id == "710318264932237362") {
 			return message.channel.send('ALEX STOP BEING WEIRD');
 		};
-		 // console.log(args.length);
-		
-		//if (args && args.length >= 1) {
-		//return message.channel.send(`You didn't provide any actions, ${message.author}!`);
-		//};
 		
 		var action = '';
 		var i;
 		for (i = 1; i < args.length; i++) {
-			// Ignore first entry in array, then create string sequentially and add space in between. Variable 'args' retains capitilisation. 
+			// Ignore first entry in array (the command), then create string sequentially and add space in between. Variable 'args' retains capitilisation. 
 			action = action+args[i]+(' ');
-			
-		
 		};
 		
 		action = action.trim();
+		
+		if (!action) {
+			return message.channel.send('Please provide an action to do!');
+		};
 		// Remove last space and any initial user entries that are not characters to provide a cleaner look (i.e. no double spaces).
 		
 		if (message.author.id == taggedUser.id) {
@@ -111,7 +118,9 @@ switch(command){
 		case 'server':
 		 shell.exec('start cmd.exe /c "server.bat"', {async:true}); //opens temp cmd window executing the specified command. Use /k instead for persistent window
 		 //shell.exit(1); //this terminates entire bot
+		 
 		 message.channel.send('The Minecraft server is starting up, please wait up to 3 minutes before running this command again.'); // add commmand cooldown
+		 
 		break;
 		default:
 		message.channel.send(`${message.author}, the command '${command}' is not a valid command! Please contact the developer if this is an unexpected occurrence.`)
