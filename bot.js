@@ -40,14 +40,14 @@ console.log(`Command Entered: ${command} by ${message.author.username} in ${mess
 logs.write(`${command} by ${message.author.username} in ${message.guild}\n`); // Writes to log.txt with \n = newline
 
 switch(command){
-		case 'test':
+		case 'test': {
 		if (!args.length) {
 		return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
 		};
 		message.channel.send(`Command name: ${command}\nArguments: ${args}`);
 		message.channel.send(`Argument 2: ${args[1]}`); // returns second arg (from 0)
 		break;
-		
+		)
 		case 'ping':
 		const m = await message.channel.send("Ping?"); // Wait for message to be sent
 		m.edit(`Pong!\n**API Ping:** \`${Math.round(client.ws.ping)}\`ms\n**Response Time:** \`${m.createdTimestamp - message.createdTimestamp}ms\``); // API Ping is websocket ping.
@@ -63,7 +63,7 @@ switch(command){
 		message.channel.send(`**Uptime:** ${days}d ${hours}h ${minutes}m ${seconds}s`);
 		break;
 		}
-		case 'do':
+		case 'do':{
 		const taggedUser = message.mentions.users.first();
 		if (!message.mentions.users.size) {
 			return message.channel.send('You need to tag a user in order to do something to them them!');
@@ -80,11 +80,12 @@ switch(command){
 		};
 		
 		action = action.trim();
+		// Remove last space and any initial user entries that are not characters to provide a cleaner look (i.e. no double spaces).
 		
 		if (!action) {
 			return message.channel.send('Please provide an action to do!');
 		};
-		// Remove last space and any initial user entries that are not characters to provide a cleaner look (i.e. no double spaces).
+		
 		
 		if (message.author.id == taggedUser.id) {
 			// If the person sending the message is the same as the user tagged
@@ -94,15 +95,21 @@ switch(command){
 		message.channel.send(`${message.author} ${action} ${taggedUser}! Hurrah!`);
 		}
 		break;
+		}
 		
-		
-		case 'help':
-		message.channel.send(`Access this site: https://uncleclan.zyrosite.com/ for help.`)
+		case 'help': {
+		message.channel.send(`Access this site: https://uncle-clan.web.app/ for help.`)
 		break;
-		case 'abs':
+		}
+		case 'abs': {
 		message.channel.send('With Pleasure:', {files: ["https://i.ibb.co/Y72hgjD/image0.jpg"]});
 		break;
-		case 'avatar':
+		}
+		case 'premium': {
+			message.channel.send('With Pleasure:', {files: ["https://i.imgur.com/NOqvMK5.png"]});
+		break;
+		}
+		case 'avatar': {
 		const user = message.mentions.users.first() || message.author;
 		const url = user.avatarURL({ dynamic:true });
 	
@@ -112,16 +119,19 @@ switch(command){
         .setImage(url);
 		message.channel.send(avatarEmbed); 
 		break;
-		case 'kate':
+		}
+		case 'kate': {
 		message.channel.send('With Pleasure:', {files: ["https://i.ibb.co/VYZbBjs/katie.png"]});
 		break;
-		case 'server':
+		}
+		case 'server': {
 		 shell.exec('start cmd.exe /c "server.bat"', {async:true}); //opens temp cmd window executing the specified command. Use /k instead for persistent window
 		 //shell.exit(1); //this terminates entire bot
 		 
 		 message.channel.send('The Minecraft server is starting up, please wait up to 3 minutes before running this command again.'); // add commmand cooldown
 		 
 		break;
+		}
 		default:
 		message.channel.send(`${message.author}, the command '${command}' is not a valid command! Please contact the developer if this is an unexpected occurrence.`)
 };
