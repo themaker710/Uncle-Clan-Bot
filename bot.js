@@ -47,7 +47,7 @@ switch(command){
 		message.channel.send(`Command name: ${command}\nArguments: ${args}`);
 		message.channel.send(`Argument 2: ${args[1]}`); // returns second arg (from 0)
 		break;
-		)
+		}
 		case 'ping':
 		const m = await message.channel.send("Ping?"); // Wait for message to be sent
 		m.edit(`Pong!\n**API Ping:** \`${Math.round(client.ws.ping)}\`ms\n**Response Time:** \`${m.createdTimestamp - message.createdTimestamp}ms\``); // API Ping is websocket ping.
