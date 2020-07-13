@@ -20,7 +20,7 @@ client.on('ready', () => {
 	client.user.setActivity('with kate', { type: 'PLAYING' }) // type options: WATCHING, PLAYING, STREAMING
   .then(presence => console.log(`Activity set to ${presence.activities[0].type} ${presence.activities[0].name}`))
   .catch(console.error);
-logs.write('Log of commands entered: {command} by {user} in {guild/server name}\n')
+logs.write('Bot initialized')
 });
 
 client.on('message', async message => {
@@ -50,7 +50,7 @@ switch(command){
 		}
 		case 'ping':
 		const m = await message.channel.send("Ping?"); // Wait for message to be sent
-		m.edit(`Pong!\n**API Ping:** \`${Math.round(client.ws.ping)}\`ms\n**Response Time:** \`${m.createdTimestamp - message.createdTimestamp}ms\``); // API Ping is websocket ping.
+		m.edit(`Pong!\n**API Latency:** \`${Math.round(client.ws.ping)}\`ms\n**Response Time:** \`${m.createdTimestamp - message.createdTimestamp}ms\``); // API Ping is websocket ping.
 		break;
 		case 'uptime': {
 		// client.uptime is in millseconds
@@ -63,12 +63,13 @@ switch(command){
 		message.channel.send(`**Uptime:** ${days}d ${hours}h ${minutes}m ${seconds}s`);
 		break;
 		}
+		
 		case 'do':{
 		const taggedUser = message.mentions.users.first();
 		if (!message.mentions.users.size) {
 			return message.channel.send('You need to tag a user in order to do something to them them!');
 		};
-		if (message.author.id == "720180397148733500" && taggedUser.id == "710318264932237362") {
+		if (message.author.id == "720180397148733500" && taggedUser.id == "710318264932237362") { // if alex tags thea in do command
 			return message.channel.send('ALEX STOP BEING WEIRD');
 		};
 		
@@ -101,6 +102,9 @@ switch(command){
 		message.channel.send(`Access this site: https://uncle-clan.web.app/ for help.`)
 		break;
 		}
+		
+		case 'img': {
+		switch(args[0]) {
 		case 'abs': {
 		message.channel.send('With Pleasure:', {files: ["https://i.ibb.co/Y72hgjD/image0.jpg"]});
 		break;
@@ -109,6 +113,19 @@ switch(command){
 			message.channel.send('With Pleasure:', {files: ["https://i.imgur.com/NOqvMK5.png"]});
 		break;
 		}
+		case 'kate': {
+		message.channel.send('With Pleasure:', {files: ["https://i.ibb.co/VYZbBjs/katie.png"]});
+		break;
+		}
+		default: {
+			message.channel.reply('The image you entered was not found. Please check your spelling or contact the developer to add your image.');
+		}
+		};
+		break;
+		}
+		
+		
+		
 		case 'avatar': {
 		const user = message.mentions.users.first() || message.author;
 		const url = user.avatarURL({ dynamic:true });
@@ -120,16 +137,17 @@ switch(command){
 		message.channel.send(avatarEmbed); 
 		break;
 		}
-		case 'kate': {
-		message.channel.send('With Pleasure:', {files: ["https://i.ibb.co/VYZbBjs/katie.png"]});
-		break;
-		}
+		
 		case 'server': {
 		 shell.exec('start cmd.exe /c "server.bat"', {async:true}); //opens temp cmd window executing the specified command. Use /k instead for persistent window
 		 //shell.exit(1); //this terminates entire bot
 		 
 		 message.channel.send('The Minecraft server is starting up, please wait up to 3 minutes before running this command again.'); // add commmand cooldown
 		 
+		break;
+		}
+		case 'reset':{ 
+		 resetBot(message.channel);
 		break;
 		}
 		default:
@@ -140,6 +158,11 @@ switch(command){
 
 
   });
-
+function resetBot(channel) {
+    // send channel a message that you're resetting bot [optional]
+    channel.send('Resetting...')
+    .then(msg => client.destroy())
+    .then(() => client.login(token));
+}
 
 client.login(token);

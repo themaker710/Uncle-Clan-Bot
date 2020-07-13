@@ -1,7 +1,7 @@
 {
   "name": "Uncle Clan",
-  "version": "1.0.0",
-  "description": "first test will change",
+  "version": "1.4.2",
+  "description": "A Pretty Gamer Description",
   "main": "bot.js",
   "author": "Nate McMullen",
   "dependencies": {
