@@ -20,7 +20,10 @@ client.on('ready', () => {
 	client.user.setActivity('with kate', { type: 'PLAYING' }) // type options: WATCHING, PLAYING, STREAMING
   .then(presence => console.log(`Activity set to ${presence.activities[0].type} ${presence.activities[0].name}`))
   .catch(console.error);
-logs.write('Bot initialized')
+logs.write(`Bot initialized\n`)
+.then(presence => console.log(`FS write stream successfully created`))
+.catch(console.error);
+
 });
 
 client.on('message', async message => {
