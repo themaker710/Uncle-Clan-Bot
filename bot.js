@@ -1,13 +1,19 @@
 'use strict';
 
+<<<<<<< HEAD
 // Import the discord.js module
 const { Client, MessageEmbed } = require('discord.js');
 const { prefix, token } = require('./config.json');
 // Create an instance of a Discord client
+=======
+const { Client, MessageEmbed } = require('discord.js');
+const { prefix, token } = require('./config.json');
+>>>>>>> First Commit
 const client = new Client();
 const shell = require('shelljs')
 let fs = require('fs')
 let logs = fs.createWriteStream('log.txt') //will create log.txt if does not exist
+<<<<<<< HEAD
 /**
  * The ready event is vital, it means that only after this will your bot start reacting to information
  * received from Discord
@@ -24,12 +30,34 @@ logs.write(`Bot initialized\n`)
 .then(presence => console.log(`FS write stream successfully created`))
 .catch(console.error);
 
+=======
+	var raw;
+client.on('ready', () => {
+
+	fs.readFile('serverdata.json', (err, data) => {
+    if (err) throw err;
+    raw = JSON.parse(data);
+    console.log(raw);
+});
+
+
+
+	client.user.setActivity('with kate', { type: 'PLAYING' }) // type options: WATCHING, PLAYING, STREAMING
+  .then(presence => console.log(`Activity set to ${presence.activities[0].type} ${presence.activities[0].name}`))
+  .catch(console.error);
+logs.write(`Bot initialized\n`);
+console.log('Initialized');
+>>>>>>> First Commit
 });
 
 client.on('message', async message => {
 
  // console.log(config.prefix.length);
+<<<<<<< HEAD
  
+=======
+ 	console.log(raw);
+>>>>>>> First Commit
  
 if (!message.content.startsWith(prefix) || message.author.bot) return;
    
@@ -107,6 +135,7 @@ switch(command){
 		}
 		
 		case 'img': {
+<<<<<<< HEAD
 		switch(args[0]) {
 		case 'abs': {
 		message.channel.send('With Pleasure:', {files: ["https://i.ibb.co/Y72hgjD/image0.jpg"]});
@@ -124,6 +153,27 @@ switch(command){
 			message.channel.reply('The image you entered was not found. Please check your spelling or contact the developer to add your image.');
 		}
 		};
+=======
+			
+			switch(args[0]) {
+			case 'abs': {
+				message.channel.send('With Pleasure:', {files: ["https://i.ibb.co/Y72hgjD/image0.jpg"]});
+			break;
+			}
+			case 'premium': {
+				message.channel.send('With Pleasure:', {files: ["https://i.imgur.com/NOqvMK5.png"]});
+			break;
+			}
+			case 'kate': {
+				message.channel.send('With Pleasure:', {files: ["https://i.ibb.co/VYZbBjs/katie.png"]});
+			break;
+			}
+			default: {
+				message.channel.send(`${message.author}, The image you entered was not found. Please check your spelling or contact the developer to add your image.`);
+		}
+		};
+		
+>>>>>>> First Commit
 		break;
 		}
 		
@@ -167,5 +217,11 @@ function resetBot(channel) {
     .then(msg => client.destroy())
     .then(() => client.login(token));
 }
+<<<<<<< HEAD
+=======
+function setPrefix(prefix) {
+	
+}
+>>>>>>> First Commit
 
 client.login(token);
