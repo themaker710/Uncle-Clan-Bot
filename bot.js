@@ -15,7 +15,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
 
-client.user.setActivity('with kate', { type: 'PLAYING' }) // type options: WATCHING, PLAYING, STREAMING
+client.user.setActivity('with kate', { type: 'PLAYING' }) // type options: WATCHING, PLAYING, STREAMING, LISTENING
   .then(presence => console.log(`Activity set to ${presence.activities[0].type} ${presence.activities[0].name}`))
   .catch(console.error);
 logs.write(`\nBot initialized`);
@@ -23,9 +23,8 @@ console.log('Initialized');
 
 });
 
-client.on('message', message => {
+client.on('message', async message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
-
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
@@ -33,7 +32,8 @@ client.on('message', message => {
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
 	if (!command) return;
-
+console.log(`Command Entered: ${command} by ${message.author.username} in ${message.guild}`);
+logs.write(`\n${command} by ${message.author.username} in ${message.guild}`); // Writes to log.txt with \n = newline
 	if (command.guildOnly && message.channel.type !== 'text') {
 		return message.reply('I can\'t execute that command inside DMs!');
 	}
@@ -60,8 +60,13 @@ client.on('message', message => {
 		const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
 		if (now < expirationTime) {
-			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+			var timeLeft = (expirationTime - now) / 1000;
+			var timeunit = 'second(s)';
+			if (timeLeft > 60){
+				timeLeft = timeLeft / 60;
+				timeunit = 'minute(s)';
+			};
+			return message.reply(`please wait ${timeLeft.toFixed(1)} more ${timeunit} before reusing the \`${command.name}\` command.`);
 		}
 	}
 
