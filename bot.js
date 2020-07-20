@@ -33,8 +33,8 @@ client.on('message', async message => {
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
 	if (!command) return;
-	console.log(`Command Entered: ${command} by ${message.author.username} in ${message.guild}`);
-	logs.write(`\n${command} by ${message.author.username} in ${message.guild}`); // Writes to log.txt with \n = newline
+	console.log(`Command Entered: ${commandName} by ${message.author.username} in ${message.guild}`);
+	logs.write(`\n${commandName} by ${message.author.username} in ${message.guild}`); // Writes to log.txt with \n = newline
 	if (command.guildOnly && message.channel.type !== 'text') {
 		return message.reply('I can\'t execute that command inside DMs!');
 	}
