@@ -3,6 +3,7 @@ module.exports = {
 	description: 'A library of custom images for easy access.',
 	usage: '[image title]',
 	cooldown: 10,
+	args: true,
 	guildOnly: false,
 	execute(message, args) {
 		switch(args[0]) {
