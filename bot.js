@@ -23,29 +23,31 @@ console.log('Initialized');
 
 });
 
-client.on('message', async message => {
+client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
-	const command = args.shift().toLowerCase();
-	
+	const commandName = args.shift().toLowerCase();
+
+	const command = client.commands.get(commandName)
+		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+	if (!command) return;
+
 	if (command.guildOnly && message.channel.type !== 'text') {
-	return message.reply('I can\'t execute that command inside DMs!');
-}
-	if (command.charAt(0) == "") return;
-	var msglocation;
-	if (message.guild == null){
-		msglocation = 'DM\'s';
-	} else {
-		msglocation = message.guild;
-	};
-	console.log(`Command Entered: ${command} by ${message.author.username} in ${msglocation}`);
-	logs.write(`\n${command} by ${message.author.username} in ${msglocation}`);
-	
-	if (!client.commands.has(command)) {
-		return message.reply('there isn\'t a command matching that input. Please contact the developer if this is an unexpected occurance.');
-	};
-	
+		return message.reply('I can\'t execute that command inside DMs!');
+	}
+
+	if (command.args && !args.length) {
+		let reply = `You didn't provide any arguments, ${message.author}!`;
+
+		if (command.usage) {
+			reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+		}
+
+		return message.channel.send(reply);
+	}
+
 	if (!cooldowns.has(command.name)) {
 		cooldowns.set(command.name, new Discord.Collection());
 	}
@@ -73,9 +75,9 @@ client.on('message', async message => {
 		let seconds = Math.floor(client.uptime / 1000) % 60;
 		return message.channel.send(`**Uptime:** ${days}d ${hours}h ${minutes}m ${seconds}s \n**THIS COMMAND RUNS UNORGANICALLY**`);
 	};
-
+	
 	try {
-		client.commands.get(command).execute(message, args);
+		command.execute(message, args);
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
