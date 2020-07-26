@@ -5,8 +5,11 @@
   "main": "bot.js",
   "author": "Nate McMullen",
   "dependencies": {
+    "better-sqlite3": "^7.1.0",
+    "discord-prefix": "^1.1.0",
     "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
     "discord.js": "^12.2.0",
+    "discord.js-poll-embed": "^1.0.2",
     "eslint": "^7.5.0",
     "shelljs": "^0.8.4",
     "winston": "^3.2.1"

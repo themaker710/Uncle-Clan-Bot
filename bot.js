@@ -32,9 +32,12 @@ client.on('message', async message => {
 	const command = client.commands.get(commandName)
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
-	if (!command) return;
+	if (!command) return; // here can add error message but not really needed
+	// if (command.AtChar[1] == " ") return;
+
 	console.log(`Command Entered: ${commandName} by ${message.author.username} in ${message.guild}`);
 	logs.write(`\n${commandName} by ${message.author.username} in ${message.guild}`); // Writes to log.txt with \n = newline
+
 	if (command.guildOnly && message.channel.type !== 'text') {
 		return message.reply('I can\'t execute that command inside DMs!');
 	}
