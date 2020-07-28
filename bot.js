@@ -1,13 +1,14 @@
 /* eslint-disable no-inline-comments */
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+const config = require('./config.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 const logs = fs.createWriteStream('log.txt');
+
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -25,6 +26,19 @@ client.once('ready', () => {
 });
 
 client.on('message', async message => {
+
+	const prefixes = JSON.parse(fs.readFileSync('./prefixes.json', 'utf8'));
+
+	const guildid = message.guild.id;
+	if (!prefixes[guildid]) {
+		prefixes[guildid] = {
+			prefixes: config.prefix,
+		};
+	}
+
+	const prefix = prefixes[guildid].prefixes;
+	console.log(prefix);
+
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
@@ -94,4 +108,4 @@ client.on('message', async message => {
 	}
 });
 
-client.login(token);
+client.login(config.token);
