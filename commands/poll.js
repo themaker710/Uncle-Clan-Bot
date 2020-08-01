@@ -12,10 +12,16 @@ module.exports = {
 		const args = message.content.slice(prefix.length).trim().split(','); // Needed personalised args seperation, so more processsing done in file.
 		const title = args[0];
 		const options = args[1].trim().split('.');
-		if (isNaN(args[2])) {
+
+		let timeout;
+		if (!args[2]) {
+			timeout = 30;
+		}
+		else if (isNaN(args[2])) {
 			return message.reply('please enter a valid number!');
 		}
-		const timeout = args[2] || 30; // arg 3 or if that doesn't exist 30
+		timeout = args[2];
+
 		pollEmbed(message, title, options, timeout);
 	},
 };
