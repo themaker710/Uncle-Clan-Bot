@@ -24,6 +24,20 @@ client.once('ready', () => {
 	console.log('Initialized');
 
 });
+client.on('messageDelete', (messageDelete) => {
+	console.log(`The message : "${messageDelete.content}" by ${messageDelete.author.tag} in ${messageDelete.guild.name} was deleted.`);
+	const deleted = JSON.parse(fs.readFileSync('./deletedmsg.json', 'utf8'));
+
+	const guildid = messageDelete.guild.id;
+	deleted[guildid] = {
+		deletedmsg: messageDelete.content,
+		deletedmsgauthor: messageDelete.author.username,
+	};
+
+	fs.writeFile('./deletedmsg.json', JSON.stringify(deleted), (err) => {
+		if (err) console.log(err);
+	});
+});
 
 client.on('message', async message => {
 
