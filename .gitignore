@@ -1,4 +1,6 @@
+const { config } = require("shelljs");
 
 log.txt
 .vscode/
 .vs/
+config.json
