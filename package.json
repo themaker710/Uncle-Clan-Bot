@@ -1,8 +1,13 @@
 {
-  "name": "Uncle Clan",
-  "version": "1.4.2",
+  "name": "@themaker710/uncleclan-bot",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": "git://github.com/themaker710/Uncle-Clan-Bot.git",
+  "version": "1.0.1",
   "description": "A Pretty Gamer Description",
   "main": "bot.js",
+  "license": "MIT",
   "author": "Nate McMullen",
   "dependencies": {
     "better-sqlite3": "^7.1.0",

@@ -17,7 +17,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
 
-	client.user.setActivity('with jac\'s balls', { type: 'PLAYING' }) // type options: WATCHING, PLAYING, STREAMING, LISTENING
+	client.user.setActivity('with kate', { type: 'PLAYING' }) // type options: WATCHING, PLAYING, STREAMING, LISTENING
 		.then(presence => console.log(`Activity set to ${presence.activities[0].type} ${presence.activities[0].name}`))
 		.catch(console.error);
 	logs.write('\nBot initialized');
