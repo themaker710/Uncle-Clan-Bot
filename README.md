@@ -10,8 +10,11 @@ Use git clone to install this bot, then start bot.js with node (provided you hav
 git clone https://github.com/themaker710/Uncle-Clan-Bot.git
 node bot.js
 ```
+Alternatively, you can use ```npm``` to install this package:
 
-
+```bash
+npm install uncleclan-bot
+```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
