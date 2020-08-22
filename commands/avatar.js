@@ -3,6 +3,7 @@ module.exports = {
 	aliases: ['pfp', 'icon'],
 	cooldown : 10,
 	guildOnly: true,
+	usage: '<user>',
 	description: 'Finds the profile picture of the tagged user, or if no user is tagged then it retrieves the author\'s pfp. ',
 	execute(message) {
 		const user = message.mentions.users.first() || message.author;

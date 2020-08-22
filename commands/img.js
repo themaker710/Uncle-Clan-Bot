@@ -1,11 +1,11 @@
 module.exports = {
 	name: 'img',
 	description: 'A library of custom images for easy access.',
-	usage: '[image title]',
+	usage: '<image title>',
 	cooldown: 10,
-	args: true,
 	guildOnly: false,
 	execute(message, args) {
+		if (!args) return message.channel.send('**Avaliable images:**\nAbs, Premium, Kate.');
 		switch(args[0]) {
 		case 'abs': {
 			message.channel.send('With Pleasure:', { files: ['https://i.ibb.co/Y72hgjD/image0.jpg'] });

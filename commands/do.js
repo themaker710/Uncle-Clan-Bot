@@ -1,5 +1,6 @@
 module.exports = {
 	name: 'do',
+	args: true,
 	description: 'Perform actions on other users.',
 	usage: '[user] [action]',
 	guildOnly: true,

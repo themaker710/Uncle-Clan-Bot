@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'poll',
 	description: 'A command to create polls',
-	usage: '[poll name], [option 1].[option 2].[option ...10], [timeout]',
+	usage: '[poll name], [option 1].[option 2].<option ...10>, <timeout>',
 	cooldown: 1,
 	args: true,
 	guildOnly: false,
