@@ -2,17 +2,19 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const config = require('./config.json');
+const shell = require('shelljs');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const cooldowns = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-const logs = fs.createWriteStream('log.txt');
-
+const logs = fs.createWriteStream('data/log.txt');
+const d = new Date();
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
+	console.log(`Loading command: ${file}`);
 }
 
 client.once('ready', () => {
@@ -26,7 +28,7 @@ client.once('ready', () => {
 });
 client.on('messageDelete', (messageDelete) => {
 	console.log(`The message : "${messageDelete.content}" by ${messageDelete.author.tag} in ${messageDelete.guild.name} was deleted.`);
-	const deleted = JSON.parse(fs.readFileSync('./deletedmsg.json', 'utf8'));
+	const deleted = JSON.parse(fs.readFileSync('./data/deletedmsg.json', 'utf8'));
 
 	const guildid = messageDelete.guild.id;
 
@@ -35,14 +37,16 @@ client.on('messageDelete', (messageDelete) => {
 		deletedmsgauthor: messageDelete.author.username,
 	};
 
-	fs.writeFile('./deletedmsg.json', JSON.stringify(deleted), (err) => {
+	fs.writeFile('./data/deletedmsg.json', JSON.stringify(deleted), (err) => {
 		if (err) console.log(err);
 	});
 });
 
 client.on('message', async message => {
 
-	const prefixes = JSON.parse(fs.readFileSync('./prefixes.json', 'utf8'));
+	if (message.content == 'Attempting to shut down...' && message.author.bot) return (await shell.exec('start cmd.exe /C "server.bat"').then(console.log('Shutting down'), message.edit('Shutting down!'), shell.exit(1)));
+
+	const prefixes = JSON.parse(fs.readFileSync('./data/prefixes.json', 'utf8'));
 
 	const guildid = message.guild.id;
 	if (!prefixes[guildid]) {
@@ -64,8 +68,8 @@ client.on('message', async message => {
 	if (!command) return; // here can add error message but not really needed
 	// if (command.AtChar[1] == " ") return;
 
-	console.log(`Command Entered: ${commandName} by ${message.author.username} in ${message.guild}`);
-	logs.write(`\n${commandName} by ${message.author.username} in ${message.guild}`); // Writes to log.txt with \n = newline
+	console.log(`Command Entered: ${commandName} by ${message.author.username} in ${message.guild} on the ${d.getDate()}/${d.getMonth()}/${d.getFullYear()} at ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`);
+	logs.write(`\n${commandName} by ${message.author.username} in ${message.guild} on the ${d.getDate()}/${d.getMonth()}/${d.getFullYear()} at ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`); // Writes to log.txt with \n = newline
 
 	if (command.guildOnly && message.channel.type !== 'text') {
 		return message.reply('I can\'t execute that command inside DMs!');
