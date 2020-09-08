@@ -44,7 +44,7 @@ client.on('messageDelete', (messageDelete) => {
 
 client.on('message', async message => {
 
-	if (message.content == 'Attempting to shut down...' && message.author.bot) return (await shell.exec('start cmd.exe /C "server.bat"').then(console.log('Shutting down'), message.edit('Shutting down!'), shell.exit(1)));
+	if (message.content == 'Attempting to shut down...' && message.author.bot) return (await shell.exec('start cmd.exe /C "server.bat"').then(console.log('Shutting down'), await message.edit('Shutting down!'), shell.exit(1)));
 
 	const prefixes = JSON.parse(fs.readFileSync('./data/prefixes.json', 'utf8'));
 
