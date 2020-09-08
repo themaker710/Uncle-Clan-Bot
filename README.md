@@ -22,7 +22,7 @@ Please make sure to update tests as appropriate.
 
 Additionally, new features and bot discussion can be held on our discord server, Uncle Clan:
 
-[Discord](discord.gg/rJcbauB/)
+[Discord](https://discord.gg/rJcbauB/)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
