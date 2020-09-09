@@ -8,6 +8,7 @@ module.exports = {
 
 		switch (args[0]) {
 		case 'stop':
+			if (!process.platform === 'win32') return message.channel.send('The bot cannot do that right now. Contact administrators for help.');
 			message.channel.send('Attempting to shut down...');
 			break;
 		case 'reload':
