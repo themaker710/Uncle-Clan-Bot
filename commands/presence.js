@@ -1,9 +1,9 @@
 module.exports = {
 	name: 'presence',
 	aliases: ['status'],
-	cooldown : 60,
+	cooldown : 1,
 	args: true,
-	usage: '[activity type] <activity name>',
+	usage: '[PLAYING|STREAMING|LISTENING|WATCHING|CLEAR] <activity name>',
 	guildOnly: true,
 	description: 'Changes the bot\'s presence.',
 	execute(msg, args) {
