@@ -25,4 +25,4 @@ Additionally, new features and bot discussion can be held on our discord server,
 [Discord](https://discord.gg/rJcbauB/)
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[GPL](https://choosealicense.com/licenses/gpl-3.0/)
